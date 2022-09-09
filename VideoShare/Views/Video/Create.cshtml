@@ -1,0 +1,42 @@
+﻿@model VideoShare.ViewModels.VideoAddViewModel
+
+<div class="modal-header">
+    <h5 class="modal-Name">Add Video</h5>
+</div>
+<form id="CreateTable" style="overflow: auto">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" required class="form-control" name="Video_Link" id="Video_Link" value="@Model.Video_Link" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="cancelBtn" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+        <button id="VideoSaveBtn" type="button" class="btn btn-primary">Save changes</button>
+    </div>
+</form>
+
+<script>
+    $("#VideoSaveBtn").click(function () {
+        if ($("#CreateTable").valid()) {
+           
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "Products")',
+                data: $('#CreateTable').serialize(),
+            })
+            .done(function (response) {
+                if (response.success) {
+                    $("#FormModel").modal('hide');
+                }
+                else {
+                    $("#errorDiv").html(response.message);
+                    $("#errorDiv").show();
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+        }
+    });
+</script>

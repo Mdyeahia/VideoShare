@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VideoService.cs" />
     <Compile Include="VideoShareSignInManager.cs" />
     <Compile Include="VideoShareUserManager.cs" />
   </ItemGroup>
