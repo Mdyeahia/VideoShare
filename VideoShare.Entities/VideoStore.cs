@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace VideoShare.Models
+namespace VideoShare.Entities
 {
     public class VideoStore
     {
         [Key]
         public int Id { get; set; }
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public VideoShareUser User { get; set; }
         public  string Video_Link { get; set; }
         public int Like_count { get; set; }
         public int Dislike_count { get; set; }

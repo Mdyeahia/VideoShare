@@ -1,9 +1,9 @@
-namespace VideoShare.Migrations
+namespace VideoShare.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class VideoTableAdded : DbMigration
+    public partial class LayerSeparated : DbMigration
     {
         public override void Up()
         {

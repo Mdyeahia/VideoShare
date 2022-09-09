@@ -7,30 +7,31 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VideoShare.Models;
+using VideoShare.Service;
 
 namespace VideoShare.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private VideoShareSignInManager _signInManager;
+        private VideoShareUserManager _userManager;
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(VideoShareUserManager userManager, VideoShareSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public VideoShareSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<VideoShareSignInManager>();
             }
             private set 
             { 
@@ -38,11 +39,11 @@ namespace VideoShare.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public VideoShareUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<VideoShareUserManager>();
             }
             private set
             {
