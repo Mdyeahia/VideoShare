@@ -6,7 +6,7 @@
 <form id="CreateTable" style="overflow: auto">
     <div class="modal-body">
         <div class="form-group">
-            <label for="Name">Name</label>
+            <label for="Name">Video Link</label>
             <input type="text" required class="form-control" name="Video_Link" id="Video_Link" value="@Model.Video_Link" />
         </div>
     </div>
@@ -27,6 +27,7 @@
             })
             .done(function (response) {
                 if (response.success) {
+                    ReloadTable()
                     $("#FormModel").modal('hide');
                 }
                 else {

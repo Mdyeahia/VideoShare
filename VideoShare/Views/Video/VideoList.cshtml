@@ -1,1 +1,52 @@
-﻿
+﻿@model VideoShare.ViewModels.VideoListViewModel
+
+<button id="AddVideoBtn" class="action-btn btn btn-success mr-1" type="button">Add New Video</button>
+
+@foreach (var video in Model.UserByVideos)
+{
+    <div class="embed-responsive embed-responsive-12by3">
+        <iframe class="embed-responsive-item" src=@video.Video_Link></iframe>
+    </div>
+
+}
+<script>
+        $("#AddVideoBtn").click(function () {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Create", "Video")'
+
+        })
+            .done(function (response) {
+
+                $('#FormModel').modal('toggle');
+                $("#contentArea").html(response);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+        });
+
+    function ReloadTable() {
+        $.ajax({
+
+            url:'@Url.Action("VideoList","Video")',
+            method:'GET',
+
+        })
+           .done(function (response) {
+
+
+               $("#tableContainer").html(response);
+
+
+           })
+           .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+               alert("FAIL");
+           });
+
+    }
+</script>
+
