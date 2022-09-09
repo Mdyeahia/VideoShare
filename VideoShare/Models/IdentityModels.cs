@@ -25,6 +25,7 @@ namespace VideoShare.Models
         {
         }
 
+        public DbSet<VideoStore> videoShares { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
