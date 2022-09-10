@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using VideoShare.Data;
@@ -38,7 +39,7 @@ namespace VideoShare.Service
         {
             var context = new VideoShareDbContext();
 
-            return context.videoStore.Where(x => x.UserId == id).ToList();
+            return context.videoStore.Where(x => x.UserId == id).Include(x=>x.Video_Details).ToList();
         }
     }
 }
