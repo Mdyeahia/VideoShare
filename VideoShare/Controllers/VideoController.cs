@@ -9,6 +9,9 @@ using VideoShare.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using VideoShare.Service;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace VideoShare.Controllers
 {
@@ -23,6 +26,12 @@ namespace VideoShare.Controllers
         {
             var model = new VideoListViewModel();
             model.UserByVideos = VideoService.Instance.VideosByUser(User.Identity.GetUserId());
+            foreach(var vio in model.UserByVideos)
+            {
+                var json = new WebClient().DownloadString("https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + vio.Video_Link + "&key=AIzaSyB0QTPOgQ3qqwLW2dp0x10D8voNAuGDHeo");
+                var kk = (JObject)JsonConvert.DeserializeObject(json, new JsonSerializerSettings());
+                vio.ViewCount = ((int)kk["items"][0]["statistics"]["viewCount"]);
+            }
             return PartialView(model);
         }
         public ActionResult Create()
