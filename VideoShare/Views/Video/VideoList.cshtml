@@ -12,8 +12,8 @@
                 <div class="col-md-3 pb-video">
                     <iframe class="pb-video-frame" width="100%" height="230" src="https://www.youtube.com/embed/@video.Video_Link" frameborder="0" allowfullscreen></iframe>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" data-id="@video.Id" class="DislikeBtn glyphicon glyphicon-thumbs-down">@video.Video_Details.Count(m=>m.Dislike)</button>
-                        <button type="button" data-id="@video.Id" class="LikeBtn glyphicon glyphicon-thumbs-up">@video.Video_Details.Count(m => m.Like)</button>
+                        <button type="button" data-id="@video.Id" class="DislikeBtn glyphicon glyphicon-thumbs-down">@video.Video_Details.Where(m=>m.Dislike==true).Count()</button>
+                        <button type="button" data-id="@video.Id" class="LikeBtn glyphicon glyphicon-thumbs-up">@video.Video_Details.Where(m => m.Like ==true).Count()</button>
                         <button type="button" data-id="@video.Id" class="glyphicon glyphicon-facetime-video">200k</button>
                     </div>
                 </div>
@@ -74,20 +74,39 @@
         });
     $(".LikeBtn").click(function () {
         $.ajax({
-            type: "GET",
-            url: "@Url.Action("Edit", "Video")",
+            type: "Post",
+            url: "@Url.Action("Like", "Video")",
             data: { Id: $(this).attr('data-id') }
 
         })
-            .done(function (response) {
+        .done(function (response) {
 
-                $('#FormModel').modal('toggle');
-                $("#contentArea").html(response);
+            alert(response.message);
+            ReloadTable()
 
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+         })
+         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
-            });
+         });
+
+
+    });
+    $(".DislikeBtn").click(function () {
+        $.ajax({
+            type: "Post",
+            url: "@Url.Action("DisLike", "Video")",
+            data: { Id: $(this).attr('data-id') }
+
+        })
+        .done(function (response) {
+
+            alert(response.message);
+            ReloadTable()
+
+         })
+         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+         });
 
 
     });

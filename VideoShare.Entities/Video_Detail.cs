@@ -13,7 +13,7 @@ namespace VideoShare.Entities
         public int Id { get; set; }
         public string UserId { get; set; }
         public VideoShareUser User { get; set; }
-        public int VideoId { get; set; }
+        public int VideoStoreId { get; set; }
         public virtual VideoStore VideoStore { get; set; }
         public bool? Like { get; set; }
         public bool? Dislike { get; set; }

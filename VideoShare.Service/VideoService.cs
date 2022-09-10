@@ -42,11 +42,12 @@ namespace VideoShare.Service
             return context.videoStore.Where(x => x.UserId == id).Include(x=>x.Video_Details).ToList();
         }
 
-        public Video_Detail LikeExist (string userid,int videoid)
+        public Video_Detail LikeDislikeExist (string userid,int videoid)
         {
-            var context = new VideoShareDbContext();
-           return context.video_Details.Where(x=>x.UserId== userid && x.Like==true && x.VideoId==videoid).FirstOrDefault();
-
+            using (var context = new VideoShareDbContext())
+            {
+                return context.video_Details.Where(x => x.UserId == userid && x.VideoStoreId == videoid).FirstOrDefault();
+            }
         }
         public void SaveLike(Video_Detail detail)
         {
@@ -54,11 +55,20 @@ namespace VideoShare.Service
             context.video_Details.Add(detail);
             context.SaveChanges();
         }
-        public void UpdateLike(Video_Detail detail)
+        public void UpdateLikeDisLike(Video_Detail detail)
+        {
+            using (var context = new VideoShareDbContext())
+            {
+                context.Entry(detail).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+        public void SaveDisLike(Video_Detail detail)
         {
             var context = new VideoShareDbContext();
-            context.Entry(detail).State = EntityState.Modified;
+            context.video_Details.Add(detail);
             context.SaveChanges();
         }
+        
     }
 }

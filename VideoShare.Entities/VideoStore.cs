@@ -15,7 +15,7 @@ namespace VideoShare.Entities
         public VideoShareUser User { get; set; }
         public  string Video_Link { get; set; }
         public int ViewCount { get; set; }
-        public virtual List<Video_Detail> Video_Details { get; set; }
+        public  List<Video_Detail> Video_Details { get; set; }
 
     }
 }
