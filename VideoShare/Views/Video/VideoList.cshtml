@@ -72,7 +72,25 @@
 
 
         });
+    $(".LikeBtn").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("Edit", "Video")",
+            data: { Id: $(this).attr('data-id') }
 
+        })
+            .done(function (response) {
+
+                $('#FormModel').modal('toggle');
+                $("#contentArea").html(response);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+
+    });
     function ReloadTable() {
         $.ajax({
 

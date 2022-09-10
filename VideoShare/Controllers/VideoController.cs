@@ -46,5 +46,29 @@ namespace VideoShare.Controllers
             result.Data = new { success = true };
             return result;
         }
+        public JsonResult Like(int id)
+        {
+            JsonResult result = new JsonResult();
+            var exist = VideoService.Instance.LikeExist(User.Identity.GetUserId(),id);
+            if(exist !=null)
+            {
+                var newVideoDetail= new Video_Detail();
+                newVideoDetail.UserId = User.Identity.GetUserId();
+                newVideoDetail.VideoId = id;
+                newVideoDetail.Like = true;
+                newVideoDetail.Dislike = null;
+
+                VideoService.Instance.SaveLike(newVideoDetail);
+                result.Data = new { success = true };
+                return result;
+            }
+            else
+            {
+                exist.Like =null;
+                VideoService.Instance.UpdateLike(exist);
+                result.Data = new { success = true };
+                return result;
+            }
+        }
     }
 }

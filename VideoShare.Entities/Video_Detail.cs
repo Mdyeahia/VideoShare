@@ -14,9 +14,9 @@ namespace VideoShare.Entities
         public string UserId { get; set; }
         public VideoShareUser User { get; set; }
         public int VideoId { get; set; }
-        public VideoStore VideoStore { get; set; }
-        public bool Like { get; set; }
-        public bool Dislike { get; set; }
-        public bool View { get; set; }
+        public virtual VideoStore VideoStore { get; set; }
+        public bool? Like { get; set; }
+        public bool? Dislike { get; set; }
+        
     }
 }
