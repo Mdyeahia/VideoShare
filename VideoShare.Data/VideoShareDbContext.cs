@@ -16,6 +16,8 @@ namespace VideoShare.Data
         }
 
         public DbSet<VideoStore> videoStore { get; set; }
+        public DbSet<Video_Detail>  video_Details { get; set; }
+
         public static VideoShareDbContext Create()
         {
             return new VideoShareDbContext();

@@ -41,9 +41,6 @@ namespace VideoShare.Controllers
             
             newVideo.UserId = User.Identity.GetUserId();
             newVideo.Video_Link = model.Video_Link;
-            newVideo.Like_count = 0;
-            newVideo.Dislike_count = 0;
-            newVideo.View_count = 0;
 
             VideoService.Instance.SaveVideo(newVideo);
             result.Data = new { success = true };
