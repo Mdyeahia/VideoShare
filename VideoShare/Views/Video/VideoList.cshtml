@@ -1,14 +1,53 @@
 ﻿@model VideoShare.ViewModels.VideoListViewModel
 
-<button id="AddVideoBtn" class="action-btn btn btn-success mr-1" type="button">Add New Video</button>
+<button id="AddVideoBtn" class="action-btn btn btn-success mr-1" style="margin:5px 0 5px 0"  type="button">Add New Video</button>
 
-@foreach (var video in Model.UserByVideos)
-{
-    <div class="embed-responsive embed-responsive-12by3">
-        <iframe class="embed-responsive-item" src=@video.Video_Link></iframe>
+
+<div class="container-fluid pb-video-container">
+    <div class="col-md-10 offset-md-1">
+        <h3 class="text-xs-center">@User.Identity.Name your shared videos</h3>
+        <div class="row pb-row">
+            @foreach (var video in Model.UserByVideos)
+            {
+                <div class="col-md-3 pb-video">
+                    <iframe class="pb-video-frame" width="100%" height="230" src="https://www.youtube.com/embed/@video.Video_Link" frameborder="0" allowfullscreen></iframe>
+                    <label class="form-control label-warning text-xs-center">F.O. and Peeva - Lichnata</label>
+                </div>
+            }
+        </div>
     </div>
+</div>
 
-}
+<style>
+    .pb-video-container {
+        padding-top: 20px;
+        background: #bdc3c7;
+        font-family: Lato;
+    }
+
+    .pb-video {
+        border: 1px solid #e6e6e6;
+        padding: 5px;
+    }
+
+        .pb-video:hover {
+            background: #2c3e50;
+        }
+
+    .pb-video-frame {
+        transition: width 2s, height 2s;
+    }
+
+        .pb-video-frame:hover {
+            height: 300px;
+        }
+
+    .pb-row {
+        margin-bottom: 10px;
+    }
+</style>
+
+
 <script>
         $("#AddVideoBtn").click(function () {
         $.ajax({

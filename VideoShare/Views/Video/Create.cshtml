@@ -1,5 +1,5 @@
 ﻿@model VideoShare.ViewModels.VideoAddViewModel
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <div class="modal-header">
     <h5 class="modal-Name">Add Video</h5>
 </div>
@@ -22,7 +22,7 @@
            
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Create", "Products")',
+                url: '@Url.Action("Create", "Video")',
                 data: $('#CreateTable').serialize(),
             })
             .done(function (response) {
