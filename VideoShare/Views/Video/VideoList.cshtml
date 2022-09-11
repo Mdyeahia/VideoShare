@@ -55,7 +55,7 @@
 
 
 <script>
-    
+
         $("#AddVideoBtn").click(function () {
         $.ajax({
             type: "GET",
@@ -82,9 +82,15 @@
 
         })
         .done(function (response) {
+            if (response.code === 1) {
+                alert('You need to login first');
+                window.location.href = "@Url.Action("Login","Account")";
+            }
+            else {
+                alert(response.message);
+                ReloadTable()
+            }
 
-            alert(response.message);
-            ReloadTable()
 
          })
          .fail(function (XMLHttpRequest, textStatus, errorThrown) {

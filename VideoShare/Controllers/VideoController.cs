@@ -20,19 +20,34 @@ namespace VideoShare.Controllers
         // GET: Video
         public ActionResult Index()
         {
-            return View();
-        }
-        public PartialViewResult VideoList()
-        {
-            var model = new VideoListViewModel();
-            model.UserByVideos = VideoService.Instance.VideosByUser(User.Identity.GetUserId());
-            foreach(var vio in model.UserByVideos)
+            if (User.Identity.IsAuthenticated)
             {
-                var json = new WebClient().DownloadString("https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + vio.Video_Link + "&key=AIzaSyB0QTPOgQ3qqwLW2dp0x10D8voNAuGDHeo");
-                var kk = (JObject)JsonConvert.DeserializeObject(json, new JsonSerializerSettings());
-                vio.ViewCount = ((int)kk["items"][0]["statistics"]["viewCount"]);
+                return View();
             }
-            return PartialView(model);
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
+        public ActionResult VideoList()
+        {
+            if (User.Identity.IsAuthenticated) 
+            {
+                var model = new VideoListViewModel();
+                model.UserByVideos = VideoService.Instance.VideosByUser(User.Identity.GetUserId());
+                foreach (var vio in model.UserByVideos)
+                {
+                    var json = new WebClient().DownloadString("https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" + vio.Video_Link + "&key=AIzaSyB0QTPOgQ3qqwLW2dp0x10D8voNAuGDHeo");
+                    var kk = (JObject)JsonConvert.DeserializeObject(json, new JsonSerializerSettings());
+                    vio.ViewCount = ((int)kk["items"][0]["statistics"]["viewCount"]);
+                }
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login","Account");
+            }
+            
         }
         public ActionResult Create()
         {
@@ -56,75 +71,92 @@ namespace VideoShare.Controllers
             return result;
         }
         [HttpPost]
+        
         public JsonResult Like(int id)
         {
-            JsonResult result = new JsonResult();
-            var exist = VideoService.Instance.LikeDislikeExist(User.Identity.GetUserId(),id);
-            if(exist==null)
+            if (User.Identity.IsAuthenticated)
             {
-                var newVideoDetail= new Video_Detail();
-                newVideoDetail.UserId = User.Identity.GetUserId();
-                newVideoDetail.VideoStoreId = id;
-                newVideoDetail.Like = true;
-                newVideoDetail.Dislike = null;
-
-                VideoService.Instance.SaveLike(newVideoDetail);
-                result.Data = new { success = true, message = "Liked" };
-                return result;
-            }
-            else
-            {
-                if(exist.Like == null)
+                JsonResult result = new JsonResult();
+                var exist = VideoService.Instance.LikeDislikeExist(User.Identity.GetUserId(), id);
+                if (exist == null)
                 {
-                    exist.Like = true;
-                    exist.Dislike = null;
+                    var newVideoDetail = new Video_Detail();
+                    newVideoDetail.UserId = User.Identity.GetUserId();
+                    newVideoDetail.VideoStoreId = id;
+                    newVideoDetail.Like = true;
+                    newVideoDetail.Dislike = null;
+
+                    VideoService.Instance.SaveLike(newVideoDetail);
+                    result.Data = new { success = true, message = "Liked" };
+                    return result;
                 }
                 else
                 {
-                    exist.Like = null;
-                    exist.Dislike = null;
-                }
-                
+                    if (exist.Like == null)
+                    {
+                        exist.Like = true;
+                        exist.Dislike = null;
+                    }
+                    else
+                    {
+                        exist.Like = null;
+                        exist.Dislike = null;
+                    }
 
-                VideoService.Instance.UpdateLikeDisLike(exist);
-                result.Data = new { success = true, message = exist.Like != null ? "Liked" : "Liked Remove" };
-                return result;
+
+                    VideoService.Instance.UpdateLikeDisLike(exist);
+                    result.Data = new { success = true, message = exist.Like != null ? "Liked" : "Liked Remove" };
+                    return result;
+                }
+            }
+            else
+            {
+                //RedirectToAction("Login", "Login");
+                return Json(new { code = 1 });
             }
         }
         [HttpPost]
         public JsonResult DisLike(int id)
         {
-            JsonResult result = new JsonResult();
-            var exist = VideoService.Instance.LikeDislikeExist(User.Identity.GetUserId(), id);
-            if (exist==null)
+            if (User.Identity.IsAuthenticated)
             {
-                var newVideoDetail = new Video_Detail();
-                newVideoDetail.UserId = User.Identity.GetUserId();
-                newVideoDetail.VideoStoreId = id;
-                newVideoDetail.Like = null;
-                newVideoDetail.Dislike = true;
-
-                VideoService.Instance.SaveDisLike(newVideoDetail);
-                result.Data = new { success = true, message = "DisLiked" };
-                return result;
-            }
-            else
-            {
-                if (exist.Dislike == null)
+                JsonResult result = new JsonResult();
+                var exist = VideoService.Instance.LikeDislikeExist(User.Identity.GetUserId(), id);
+                if (exist == null)
                 {
-                    
-                    exist.Dislike = true;
-                    exist.Like = null;
+                    var newVideoDetail = new Video_Detail();
+                    newVideoDetail.UserId = User.Identity.GetUserId();
+                    newVideoDetail.VideoStoreId = id;
+                    newVideoDetail.Like = null;
+                    newVideoDetail.Dislike = true;
+
+                    VideoService.Instance.SaveDisLike(newVideoDetail);
+                    result.Data = new { success = true, message = "DisLiked" };
+                    return result;
                 }
                 else
                 {
-                    exist.Like = null;
-                    exist.Dislike = null;
-                }
+                    if (exist.Dislike == null)
+                    {
 
-                VideoService.Instance.UpdateLikeDisLike(exist);
-                result.Data = new { success = true, message=exist.Dislike!=null? "DisLiked":"DisLiked Remove" };
-                return result;
+                        exist.Dislike = true;
+                        exist.Like = null;
+                    }
+                    else
+                    {
+                        exist.Like = null;
+                        exist.Dislike = null;
+                    }
+
+                    VideoService.Instance.UpdateLikeDisLike(exist);
+                    result.Data = new { success = true, message = exist.Dislike != null ? "DisLiked" : "DisLiked Remove" };
+                    return result;
+                }
+            }
+            else
+            {
+                //RedirectToAction("Login", "Login");
+                return Json(new { code = 1 });
             }
         }
     }

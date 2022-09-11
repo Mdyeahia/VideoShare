@@ -18,5 +18,7 @@ namespace VideoShare.ViewModels
     public class VideoListViewModel
     {
         public List<VideoStore> UserByVideos { get; set; }
+        public List<VideoStore> AllVideos { get; set; }
+
     }
 }
