@@ -153,7 +153,7 @@ namespace VideoShare.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new VideoShareUser { UserName = model.Email, Email = model.Email };
+                var user = new VideoShareUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
