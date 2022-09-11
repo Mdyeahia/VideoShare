@@ -2,10 +2,12 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using VideoShare.Data;
 using VideoShare.Service;
 using VideoShare.ViewModels;
 
@@ -24,6 +26,22 @@ namespace VideoShare.Controllers
                 vio.ViewCount = ((int)kk["items"][0]["statistics"]["viewCount"]);
             }
             return View(model);
+        }
+        public ActionResult Details(int Id)
+        {
+            var model =new VideoDetailsViewModel();
+            model.VideoStore = VideoService.Instance.GetVideoDetailsBYId(Id);
+            using (var context = new VideoShareDbContext())
+            {
+
+                model.videoDetailsViewModels = context.Database.SqlQuery<VideoDetailsViewModel>(@"select u.UserName,d.[Like],d.Dislike from Video_Detail d
+                                    inner join AspNetUsers u on d.UserId=u.Id
+                                    inner join VideoStores m on m.Id=d.VideoStoreId
+                                    where m.Id=@videoid and d.[Like]=1 or d.Dislike=1", new SqlParameter("@videoid",Id)).ToList();
+            }
+
+            return View(model);
+
         }
     }
 }

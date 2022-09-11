@@ -1,13 +1,13 @@
 ﻿@model VideoShare.ViewModels.VideoAddViewModel
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <div class="modal-header">
-    <h5 class="modal-Name">Add Video</h5>
+    <h5 class="modal-Name">Share Video</h5>
 </div>
 <form id="CreateTable" style="overflow: auto">
     <div class="modal-body">
         <div class="form-group">
-            <label for="Name">Video Link</label>
-            <input type="text" required class="form-control" name="Video_Link" id="Video_Link" value="@Model.Video_Link" />
+            <label for="Name">Video Code(Ex: Bj62vrD6k-0)</label>
+            <input type="text" placeholder="Paste Youtube Embed Video code" required class="form-control" name="Video_Link" id="Video_Link" value="@Model.Video_Link" />
         </div>
     </div>
     <div class="modal-footer">

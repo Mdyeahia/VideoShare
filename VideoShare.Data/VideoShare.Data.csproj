@@ -74,6 +74,14 @@
     <Compile Include="Migrations\202209101104399_ViewCountMoveToVideoStoreTable2.Designer.cs">
       <DependentUpon>202209101104399_ViewCountMoveToVideoStoreTable2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209110950178_adduserRefferencetoQuery.cs" />
+    <Compile Include="Migrations\202209110950178_adduserRefferencetoQuery.Designer.cs">
+      <DependentUpon>202209110950178_adduserRefferencetoQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209111026031_adduserRefferencetoQueryRemove.cs" />
+    <Compile Include="Migrations\202209111026031_adduserRefferencetoQueryRemove.Designer.cs">
+      <DependentUpon>202209111026031_adduserRefferencetoQueryRemove.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VideoShareDbContext.cs" />
@@ -103,6 +111,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202209101104399_ViewCountMoveToVideoStoreTable2.resx">
       <DependentUpon>202209101104399_ViewCountMoveToVideoStoreTable2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209110950178_adduserRefferencetoQuery.resx">
+      <DependentUpon>202209110950178_adduserRefferencetoQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209111026031_adduserRefferencetoQueryRemove.resx">
+      <DependentUpon>202209111026031_adduserRefferencetoQueryRemove.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

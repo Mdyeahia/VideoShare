@@ -51,9 +51,16 @@ namespace VideoShare.Controllers
         }
         public ActionResult Create()
         {
-            VideoAddViewModel model = new VideoAddViewModel();
+            if (User.Identity.IsAuthenticated)
+            {
+                VideoAddViewModel model = new VideoAddViewModel();
 
-            return PartialView(model);
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
         [HttpPost]
         public JsonResult Create(VideoAddViewModel model)

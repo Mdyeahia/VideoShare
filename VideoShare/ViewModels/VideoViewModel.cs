@@ -21,4 +21,14 @@ namespace VideoShare.ViewModels
         public List<VideoStore> AllVideos { get; set; }
 
     }
+    public class VideoDetailsViewModel
+    {
+       public  VideoStore VideoStore { get; set; }
+       public string UserName { get; set; }
+        public bool? Like { get; set; }
+        public bool? Dislike { get; set; }
+
+        public List<VideoDetailsViewModel> videoDetailsViewModels { get; set; }
+
+    }
 }

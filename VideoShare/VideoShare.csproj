@@ -239,6 +239,7 @@
     <Content Include="Views\Video\Create.cshtml" />
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Video\VideoList.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

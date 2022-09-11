@@ -1,0 +1,74 @@
+﻿@model VideoShare.ViewModels.VideoDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid pb-video-container">
+    <div class="col-md-10 offset-md-1">
+        <h3 class="text-xs-center">Details</h3>
+        <div class="row pb-row">
+            <div class="col-md-3 pb-video">
+                <iframe class="pb-video-frame" width="100%" height="230" src="https://www.youtube.com/embed/@Model.VideoStore.Video_Link" frameborder="0" allowfullscreen></iframe>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <h5>Video Uploaded by @Model.VideoStore.User.UserName</h5>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class=" col-md-4 overflow-auto">
+                    <ul>
+                        <li>Liked By</li>
+                        @foreach (var video in Model.videoDetailsViewModels.Where(x=>x.Like==true))
+                        {
+
+                            <li>@video.UserName</li>
+
+                        }
+                    </ul>
+                </div>
+                <div class=" col-md-4 overflow-auto">
+                    <ul>
+                        <li>DisLiked By</li>
+                        @foreach (var video in Model.videoDetailsViewModels.Where(x => x.Dislike == true))
+                        {
+
+                            <li>@video.UserName</li>
+
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .pb-video-container {
+        padding-top: 20px;
+        background: #bdc3c7;
+        font-family: Lato;
+    }
+
+    .pb-video {
+        border: 1px solid #e6e6e6;
+        padding: 5px;
+    }
+
+        .pb-video:hover {
+            background: #2c3e50;
+        }
+
+    .pb-video-frame {
+        transition: width 2s, height 2s;
+    }
+
+        .pb-video-frame:hover {
+            height: 300px;
+        }
+
+    .pb-row {
+        margin-bottom: 10px;
+    }
+</style>
+

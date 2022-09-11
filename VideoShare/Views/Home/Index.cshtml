@@ -14,6 +14,7 @@
                         <button type="button" data-id="@video.Id" class="DislikeBtn glyphicon glyphicon-thumbs-down">@video.Video_Details.Where(m => m.Dislike == true).Count()</button>
                         <button type="button" data-id="@video.Id" class="LikeBtn glyphicon glyphicon-thumbs-up">@video.Video_Details.Where(m => m.Like == true).Count()</button>
                         <button type="button" data-id="@video.Id" class="glyphicon glyphicon-facetime-video">@video.ViewCount</button>
+                        <h6><a href="@Url.Action("Details", "Home", new { ID = video.Id })">Detail</a></h6>
                     </div>
                 </div>
 

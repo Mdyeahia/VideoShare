@@ -35,6 +35,15 @@ namespace VideoShare.Service
             context.videoStore.Add(data);
             context.SaveChanges();
         }
+        public VideoStore GetVideoDetailsBYId(int Id)
+        {
+            using (var context = new VideoShareDbContext())
+            {
+
+                return context.videoStore.Where(x => x.Id ==Id).Include(x=>x.Video_Details).Include(x=>x.User).First();
+            }
+        }
+        
         public List<VideoStore> GetAllVideo()
         {
             var context = new VideoShareDbContext();
